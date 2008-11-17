@@ -1,0 +1,13 @@
+GothPy-Katas
+------------
+
+GothPy[1] is an association of Python programmers based in Gothenburg, Sweden.
+The group was founded in April 2008 and holds monthly meetings. Meetings are
+held at <somewhere> and usually last for three hours. The first hour or so is a
+presentation of some Python related topic by someone in the group and the rest
+of the time is spent working on a coding challenge (kata[2]).
+
+This GitHub repository contains source code from those katas.
+
+[1] http://groups.google.com/group/gothpy
+[2] http://www.codingdojo.org/
