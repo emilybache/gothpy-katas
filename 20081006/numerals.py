@@ -1,3 +1,8 @@
+## Roman Numerals Kata
+##
+## See http://commentsarelies.blogspot.com/2008/09/roman-numerals.html
+## Written by Johan Lindberg
+
 def as_roman_numeral(num):
     """
     Returns a string containing the roman numeral representation of num or
