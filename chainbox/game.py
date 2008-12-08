@@ -5,11 +5,11 @@ class ChainBox(object):
     def __init__(self):
         """
         This is a Python implementation of a board game called ChainBox. I don't
-        where this game comes from, who has invented it or whether or not you
-        can play it somewhere online. The first I heard of it was in the Nokia
-        coder's competition IOI 2001. Unfortunately, all material seems more or
-        less lost. If you know, or know someone that knows something about this
-        game, please send me an e-mail (johan@pulp.se).
+        know where this game comes from, who has invented it or whether or not
+        you can play it somewhere online. The first I heard of it was in the
+        Nokia coder's competition IOI 2001[1]. Unfortunately, all material seems
+        more or less lost. If you know, or know someone that knows, something
+        about this game, please send me an e-mail (johan@pulp.se).
 
         The rules are very simple.        0000000000   Fig.2
         When the game starts, the board   0000000000   0000000000
@@ -32,6 +32,8 @@ class ChainBox(object):
         connected to all markers of the same value in it's neighbourhood. Apart
         from positions on the edge and in the corners, all positions have 8
         other positions in their neighbourhoods.
+
+        [1] http://www.cs.uta.fi/ioi01/coder/
         """
 
         self.width =  10
