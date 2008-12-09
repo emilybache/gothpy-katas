@@ -91,9 +91,14 @@ class ChainBox(object):
         # This checks whether or not the board is full...
         if len(self.board.values()) == 100 and \
            0 not in self.board.values():
-            # TBD!
-            return 0 # 0 indicates a tie but in fact, we should find the longest
-                     # "chain" of markers on the board to decide the winner.
+            p1 = self._longest_chain(1)
+            p2 = self._longest_chain(2)
+            if len(p1) > len(p2):
+                return 1
+            elif len(p2) > len(p1):
+                return 2
+            else:
+                return 0
 
         # If it's not full. We check for boxes
         else:
