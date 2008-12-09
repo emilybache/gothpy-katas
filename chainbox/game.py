@@ -109,6 +109,74 @@ class ChainBox(object):
 
         return -1 # game is not over
 
+    def _longest_chain(self, player):
+        """
+        Returns a list of positions that together form the longest chain for
+        'player' on the board.
+        
+        >>> c = ChainBox()
+        >>> c.place_marker(1,(3,3))
+        True
+        >>> c.place_marker(1,(3,4))
+        True
+        >>> c.place_marker(1,(3,5))
+        True
+        >>> c.place_marker(1,(4,3))
+        True
+        >>> c.place_marker(1,(5,3))
+        True
+        >>> c.place_marker(1,(6,3))
+        True
+        >>> c.place_marker(1,(7,4))
+        True
+        >>> c.place_marker(1,(7,5))
+        True
+        >>> slice = c._slice((0,0), (10,10))
+        >>> for rows in slice:
+        ...   print rows
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        [0, 0, 0, 1, 1, 1, 0, 0, 0, 0]
+        [0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+        [0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+        [0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+        [0, 0, 0, 0, 1, 1, 0, 0, 0, 0]
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        >>> chain = c._longest_chain(1)
+        >>> set(chain) == set([(3, 3), (3, 4), (3, 5), (4, 3), (5, 3), (6, 3), (7, 4), (7, 5)])
+        True
+        """
+
+        chains = { 0: [], }
+        for x in range(10):
+            for y in range(10):
+                slice = self._slice((x-1,y-1), (3,3))
+                if slice[1][1] == player:
+                    # add all positions in this neighbourhood (with the same
+                    # value) to the same chain
+                    _positions = []
+                    for xx in range(3):
+                        for yy in range(3):
+                            if slice[xx][yy] == player:
+                                _positions.append((x-1+xx,y-1+yy))
+
+                    ## connect these positions with an existing chain or start
+                    ## a new one
+                    make_new_chain = True
+                    for _pos in _positions:
+                        for key in chains:
+                            if _pos in chains[key]:
+                                chains[key] = list(set(chains[key] + _positions))
+                                make_new_chain = False
+                                break
+
+                    if make_new_chain:
+                        chains[len(chains.keys())] = _positions
+
+        return sorted(chains.values(), key = lambda l: len(l), reverse = True)[0]
+
     def _slice(self, position, dimension):
         """
         Returns a part of the board as specified by 'position' and 'dimension'.
@@ -127,33 +195,31 @@ class ChainBox(object):
         >>> c._slice((1,1), (2,2))
         [[1, 0], [0, 2]]
 
-        You're not allowed to go outside the board so
+        A slice can partially go outside the board (1 position in either
+        direction). If it does, a '@' indicates that the position is not
+        possible to play at.
 
         >>> c.place_marker(1,(9,9))
         True
-        >>> c._slice((9,9), (1,1))
-        [[1]]
-
-        is fine, but
-
         >>> c._slice((9,9), (2,2))
-        Traceback (most recent call last):
-        ...
-        AssertionError
+        [[1, '@'], ['@', '@']]
 
-        is not!
         """
-        assert dimension[0]+ position[0] <= self.width
-        assert dimension[1]+ position[1] <= self.height
+        assert dimension[0]+ position[0] in range(-1, self.width+2)
+        assert dimension[1]+ position[1] in range(-1, self.height+2)
 
         result = []
-        for h in range(dimension[1]):
+        for x in range(dimension[0]):
             temp = []
-            for w in range(dimension[0]):
+            for y in range(dimension[1]):
                 try:
-                    temp.append(self.board[(position[0]+w,position[1]+h)])
+                    temp.append(self.board[(position[0]+x,position[1]+y)])
                 except KeyError:
-                    temp.append(0)
+                    if position[0]+x in range(self.width) and \
+                       position[1]+y in range(self.height):
+                        temp.append(0)
+                    else:
+                        temp.append('@')
 
             result.append(temp)
         return result
