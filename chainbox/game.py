@@ -115,22 +115,8 @@ class ChainBox(object):
         'player' on the board.
         
         >>> c = ChainBox()
-        >>> c.place_marker(1,(3,3))
-        True
-        >>> c.place_marker(1,(3,4))
-        True
-        >>> c.place_marker(1,(3,5))
-        True
-        >>> c.place_marker(1,(4,3))
-        True
-        >>> c.place_marker(1,(5,3))
-        True
-        >>> c.place_marker(1,(6,3))
-        True
-        >>> c.place_marker(1,(7,4))
-        True
-        >>> c.place_marker(1,(7,5))
-        True
+        >>> for pos in [(3,3), (3,4), (3,5), (4,3), (5,3), (6,3), (7,4), (7,5)]:
+        ...   _ = c.place_marker(1,pos)
         >>> slice = c._slice((0,0), (10,10))
         >>> for rows in slice:
         ...   print rows
@@ -149,7 +135,7 @@ class ChainBox(object):
         True
         """
 
-        chains = { 0: [], }
+        chains = { }
         for x in range(10):
             for y in range(10):
                 slice = self._slice((x-1,y-1), (3,3))
