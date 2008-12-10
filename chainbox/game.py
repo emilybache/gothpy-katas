@@ -165,8 +165,21 @@ class ChainBox(object):
 
                     if make_new_chain:
                         chains[len(chains.keys())] = _positions
+        if len(chains.values()) > 0:
+            return sorted(chains.values(), key = lambda l: len(l), reverse = True)[0]
+        else:
+            return []
 
-        return sorted(chains.values(), key = lambda l: len(l), reverse = True)[0]
+    def marker_at_position(self, position):
+        """
+        Returns the marker at 'position' or 0 if no marker has been placed there.
+
+        >>> c = ChainBox()
+        >>> c.marker_at_position((3,4))
+        0
+        """
+
+        return self._slice(position, (1,1))[0][0]
 
     def _slice(self, position, dimension):
         """
@@ -194,8 +207,8 @@ class ChainBox(object):
         True
         >>> c._slice((9,9), (2,2))
         [[1, '@'], ['@', '@']]
-
         """
+
         assert dimension[0]+ position[0] in range(-1, self.width+2)
         assert dimension[1]+ position[1] in range(-1, self.height+2)
 
