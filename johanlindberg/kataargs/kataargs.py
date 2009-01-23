@@ -32,31 +32,6 @@ def make_parser(**schema):
     def is_flag(v):
         return len(v) > 1 and v[0] == '-'
 
-    def parse(value, curr, result):
-        if is_flag(value):
-            curr = value[1:]
-            try:
-                if arity(curr) == 0:
-                    result[curr] = True
-                    curr = None
-            except KeyError:
-                raise Exception("No flag named '%s' have been specified for this parser." % (curr))
-                    
-        else:
-            try:
-                if arity(curr) == N:
-                    result[curr].append(expected_type(curr)(value))
-                else:
-                    result[curr] = expected_type(curr)(value)
-                        
-            except KeyError:
-                raise Exception("No flag can be associated with value: %s." % (value))
-                    
-            except ValueError:
-                raise Exception("Expected value of type: %s for flag: %s." % (expected_type(curr), curr))
-
-        return curr, result            
-
     def parser(arguments):
         curr = None
         result = {}
@@ -70,9 +45,30 @@ def make_parser(**schema):
                 result[f] = []
                 
         # Parse list of arguments
-        for x in arguments:
-            curr, result = parse(x, curr, result)
-            
+        for value in arguments:
+            if is_flag(value):
+                curr = value[1:]
+                try:
+                    if arity(curr) == 0:
+                        result[curr] = True
+                        curr = None
+
+                except KeyError:
+                    raise Exception("No flag named '%s' have been specified for this parser." % (curr))
+                    
+            else:
+                try:
+                    if arity(curr) == N:
+                        result[curr].append(expected_type(curr)(value))
+                    else:
+                        result[curr] = expected_type(curr)(value)
+                        
+                except KeyError:
+                    raise Exception("No flag can be associated with value: %s." % (value))
+                
+                except ValueError:
+                    raise Exception("Expected value of type: %s for flag: %s." % (expected_type(curr), curr))
+
         return result
         
     return parser
