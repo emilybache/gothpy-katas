@@ -5,6 +5,9 @@ def flag(expected_type, default = None):
         return (0, expected_type, False)
 
     elif type(expected_type) == list:
+        if len(expected_type) > 1:
+            raise Exception("You cannot specify more than one type for a list.")
+
         return (-1, expected_type[0], default)
 
     else:
@@ -29,7 +32,7 @@ def make_parser(**schema):
     for f in schema.keys():
         if expected_type(f) is not None and \
            expected_type(f).__class__.__name__ != 'type':
-            raise Exception("Schema validation failure: Expected type must be a built-in type.")
+            raise Exception("Expected type must be a built-in type.")
 
     def is_flag(v):
         return len(v) > 1 and v[0] == '-'
@@ -61,7 +64,14 @@ def make_parser(**schema):
             else:
                 try:
                     if arity(curr) == -1:
-                        result[curr].append(expected_type(curr)(value))
+                        if "," in value:
+                            values = value.split(",")
+                        else:
+                            values = [value,]
+
+                        for v in values:
+                            result[curr].append(expected_type(curr)(v))
+
                     else:
                         result[curr] = expected_type(curr)(value)
                         

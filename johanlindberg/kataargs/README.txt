@@ -49,7 +49,7 @@ with the value True if it is present in the list of arguments. If it is
 not present, it will be given the value False regardless of which default
 value was specified.
 
->>> parse = make_parser(a = flag(None, default = False),
+>>> parse = make_parser(a = flag(None, default = 1),
 ...                     b = flag(None))
 
 >>> values = parse(['-a', '-b'])
@@ -64,14 +64,17 @@ False
 >>> print(values['b'])
 False
 
-If you specify an arity of N (many) for a flag, it will be associated with
-a list of values (of the expected type). It will always default to the
-empty list, regardless of what you specify.
+
+If a flag has a list as expected type, it will be associated with a list of
+values (of the expected type). It will always default to the empty list,
+regardless of what you specify. Lists in arguments can be expressed either
+as separate arguments or as one argument where list values are separated
+with , as in '1,2,3,4'.
 
 >>> parse = make_parser(a = flag([int], default = None))
->>> values = parse(['-a', '4', '2'])
+>>> values = parse(['-a', '1', '2', '3,4,5'])
 >>> print(values['a'])
-[4, 2]
+[1, 2, 3, 4, 5]
 
 >>> values = parse([])
 >>> print(values['a'])
@@ -111,12 +114,18 @@ Traceback (most recent call last):
 Exception: No flag can be associated with value: 1.
 
 
-You must specify an expected type when calling make_parser.
+You must specify an expected type when calling make_parser and you cannot
+specify more than type in a list.
 
 >>> parse = make_parser(a = flag())
 Traceback (most recent call last):
     ...
 TypeError: flag() takes at least 1 positional argument (0 given)
+
+>>> parse = make_parser(a = flag([int, float]))
+Traceback (most recent call last):
+    ...
+Exception: You cannot specify more than one type for a list.
 
 
 Schemas are validated before a parser is created for handling it. The
@@ -128,4 +137,4 @@ validation rule is quite simple.
 >>> parse = make_parser(a = flag(foo))
 Traceback (most recent call last):
     ...
-Exception: Schema validation failure: Expected type must be a built-in type.
+Exception: Expected type must be a built-in type.
