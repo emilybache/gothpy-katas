@@ -1,9 +1,14 @@
 ### KataArgs (for Python 3.0)
 
-N = -1
+def flag(expected_type, default = None):
+    if expected_type is None:
+        return (0, expected_type, False)
 
-def flag(arity = 1, expected_type = None, default = None):
-    return (arity, expected_type, default)
+    elif type(expected_type) == list:
+        return (-1, expected_type[0], default)
+
+    else:
+        return (1, expected_type, default)
     
 def make_parser(**schema):
     """Make and return a parser for <schema>.
@@ -22,9 +27,6 @@ def make_parser(**schema):
     
     # Schema validation
     for f in schema.keys():
-        if arity(f) != 0 and expected_type(f) is None:
-            raise Exception("Schema validation failure: You must specify an expected type for %s." % (f))
-            
         if expected_type(f) is not None and \
            expected_type(f).__class__.__name__ != 'type':
             raise Exception("Schema validation failure: Expected type must be a built-in type.")
@@ -41,7 +43,7 @@ def make_parser(**schema):
             if default(f) is not None:
                 result[f] = default(f)
                 
-            elif arity(f) == N:
+            elif arity(f) == -1:
                 result[f] = []
                 
         # Parse list of arguments
@@ -58,7 +60,7 @@ def make_parser(**schema):
                     
             else:
                 try:
-                    if arity(curr) == N:
+                    if arity(curr) == -1:
                         result[curr].append(expected_type(curr)(value))
                     else:
                         result[curr] = expected_type(curr)(value)
@@ -75,12 +77,12 @@ def make_parser(**schema):
     
 if __name__ == '__main__':
     import doctest
-    doctest.testfile("kataargs.doctest.txt")
+    doctest.testfile("README.txt")
 
     import sys
-    parse = make_parser(l = flag(arity = 0, default = False),
-                        p = flag(arity = 1, expected_type = int, default = 0),
-                        d = flag(arity = N, expected_type = str, default = None))
+    parse = make_parser(l = flag(None),
+                        p = flag(int, default = 0),
+                        d = flag([str], default = None))
     values = parse(sys.argv[1:])
     
     print(values)
