@@ -43,7 +43,7 @@ class ChainBox(object):
         for p in [1,2]:
             c = sorted(game._longest_chain(p), key = lambda t: t[0]*10 + t[1])
             if len(c) > 1:
-                self.show_chain(p, c)
+                self.draw_longest_chain(p, c)
 
         pygame.display.update()
 
@@ -66,7 +66,7 @@ class ChainBox(object):
         px, py = self._translate(x, y)
         pygame.draw.circle(surface, colors[player], (px, py), radius)
 
-    def show_chain(self, player, chain):
+    def draw_longest_chain(self, player, chain):
         surface = pygame.display.get_surface()
         colors = { 1: (255,255,255),
                    2: (0,0,0), }
@@ -75,6 +75,10 @@ class ChainBox(object):
         if self.col_height < self.col_width:
             radius = self.col_height // 2 - 2
         line_width = radius // 2
+
+        # The chain is sorted from left to right and top to bottom but there's
+        # the additional constraint that no two markers may be further apart
+        # than 1 distance unit.
 
         points = [self._translate(*p) for p in chain]
         pygame.draw.lines(surface, colors[player], False, points, line_width)

@@ -12,7 +12,7 @@ def make_parser(**schema):
     the name of the flag and the value is a tuple containing information about
     arity, expected type and default value.
     
-    Doctests have been moved out to kataargs.doctest.txt
+    Doctests have been moved out to README.txt
     """
     
     # Syntax shortcuts
