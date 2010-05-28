@@ -1,6 +1,9 @@
 
 This is a little exercise in understanding what simple, well-tested code looks like. The exercise is available in both Ruby and Python.
 
+(note: to run the python version you need to have python 2.6, and also mockito installed (http://code.google.com/p/mockito/wiki/MockitoForPython))
+(note: to run the ruby version you need to install rails)
+
 This is a description of the code:
 - given these domain classes: Patient, Medication, Prescription
 - a Prescription has a dispense date and a days supply
