@@ -1,0 +1,8 @@
+Lower bound = 2010-03-09
+Dispense date = 2010-05-01
+Effective start date = 2010-05-01
+Effective range = [datetime.date(2010, 5, 1), datetime.date(2010, 5, 2), datetime.date(2010, 5, 3), datetime.date(2010, 5, 4), datetime.date(2010, 5, 5), datetime.date(2010, 5, 6), datetime.date(2010, 5, 7), datetime.date(2010, 5, 8), datetime.date(2010, 5, 9), datetime.date(2010, 5, 10), datetime.date(2010, 5, 11), datetime.date(2010, 5, 12), datetime.date(2010, 5, 13), datetime.date(2010, 5, 14), datetime.date(2010, 5, 15), datetime.date(2010, 5, 16), datetime.date(2010, 5, 17), datetime.date(2010, 5, 18), datetime.date(2010, 5, 19), datetime.date(2010, 5, 20), datetime.date(2010, 5, 21), datetime.date(2010, 5, 22), datetime.date(2010, 5, 23), datetime.date(2010, 5, 24), datetime.date(2010, 5, 25), datetime.date(2010, 5, 26), datetime.date(2010, 5, 27), datetime.date(2010, 5, 28), datetime.date(2010, 5, 29), datetime.date(2010, 5, 30), datetime.date(2010, 5, 31), datetime.date(2010, 6, 1), datetime.date(2010, 6, 2), datetime.date(2010, 6, 3), datetime.date(2010, 6, 4), datetime.date(2010, 6, 5), datetime.date(2010, 6, 6)]
+Lower bound = 2010-03-09
+Dispense date = 2010-05-01
+Effective start date = 2010-05-01
+Dates prescribed =  [datetime.date(2010, 5, 1), datetime.date(2010, 5, 2), datetime.date(2010, 5, 3), datetime.date(2010, 6, 2), datetime.date(2010, 6, 3), datetime.date(2010, 6, 4), datetime.date(2010, 6, 5), datetime.date(2010, 6, 6), datetime.date(2010, 6, 7), datetime.date(2010, 6, 8), datetime.date(2010, 6, 9), datetime.date(2010, 6, 10), datetime.date(2010, 6, 11)]

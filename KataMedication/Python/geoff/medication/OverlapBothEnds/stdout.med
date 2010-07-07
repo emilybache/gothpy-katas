@@ -1,0 +1,8 @@
+Lower bound = 2010-06-02
+Dispense date = 2010-06-01
+Effective start date = 2010-06-02
+Effective range = [datetime.date(2010, 6, 2), datetime.date(2010, 6, 3), datetime.date(2010, 6, 4), datetime.date(2010, 6, 5), datetime.date(2010, 6, 6)]
+Lower bound = 2010-06-02
+Dispense date = 2010-06-01
+Effective start date = 2010-06-02
+Dates prescribed =  [datetime.date(2010, 6, 1), datetime.date(2010, 6, 2), datetime.date(2010, 6, 3), datetime.date(2010, 6, 5), datetime.date(2010, 6, 6), datetime.date(2010, 6, 7), datetime.date(2010, 6, 8), datetime.date(2010, 6, 9)]

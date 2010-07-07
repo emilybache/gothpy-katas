@@ -1,0 +1,6 @@
+# Full path to the System Under Test
+executable:/home/geoff/code/gothpy-katas/KataMedication/Python/patient_new2.py
+
+[run_dependent_text]
+stdout:.*
+traffic:->RET{->}the end

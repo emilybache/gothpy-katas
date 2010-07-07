@@ -1,0 +1,8 @@
+<-PYT:datetime.date.today()
+->RET:datetime.date(2010, 6, 7)
+<-PYT:datetime.date.today()
+->RET:datetime.date(2010, 6, 7)
+<-PYT:datetime.date.today()
+->RET:datetime.date(2010, 6, 7)
+<-PYT:datetime.date.today()
+->RET:datetime.date(2010, 6, 7)
