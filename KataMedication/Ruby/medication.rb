@@ -87,6 +87,12 @@ class Medication
     end
   end
 
+  def possession_ratio(day_count)
+    return 0/0.0 if number_of_days_in_range(day_count).zero?
+    ratio = Rational(number_of_days_prescribed(day_count),number_of_days_in_range(day_count))
+    ratio > 1 ? 1 : ratio
+  end
+  
   def possession(day_count)
     return 0 if number_of_days_in_range(day_count).zero?
     number_of_days_prescribed(day_count)

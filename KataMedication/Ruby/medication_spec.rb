@@ -168,6 +168,69 @@ describe Medication do
       medication.most_recent_prescription.should == most_recent_prescription
     end
   end
+  describe "#possession_ratio" do
+    before do
+      @patient = Patient.make
+      @medication = Medication.new
+      @patient.medications << @medication
+    end
+
+    subject do
+      @medication.possession_ratio(90)
+    end
+
+    context "received 105, 75, 45, and 15 days ago" do
+      before do
+        @medication.prescriptions << Prescription.new(:days_supply => 30, :dispense_date => 105.days.ago)
+        @medication.prescriptions << Prescription.new(:days_supply => 30, :dispense_date => 75.days.ago)
+        @medication.prescriptions << Prescription.new(:days_supply => 30, :dispense_date => 45.days.ago)
+        @medication.prescriptions << Prescription.new(:days_supply => 30, :dispense_date => 15.days.ago)
+      end
+
+      it { should == 1 }
+    end
+
+    context "received 105, 60, and 15 days ago" do
+      before do
+        @medication.prescriptions << Prescription.new(:days_supply => 30, :dispense_date => 105.days.ago)
+        @medication.prescriptions << Prescription.new(:days_supply => 30, :dispense_date => 60.days.ago)
+        @medication.prescriptions << Prescription.new(:days_supply => 30, :dispense_date => 15.days.ago)
+      end
+
+      it { should == Rational(2, 3) }
+    end
+
+    context "received 45 and 15 days ago" do
+      before do
+        @medication.prescriptions << Prescription.new(:days_supply => 30, :dispense_date => 45.days.ago)
+        @medication.prescriptions << Prescription.new(:days_supply => 30, :dispense_date => 15.days.ago)
+      end
+      it { should == 1 }
+    end
+
+    context "received 60 and 15 days ago" do
+      before do
+        @medication.prescriptions << Prescription.new(:days_supply => 30, :dispense_date => 60.days.ago)
+        @medication.prescriptions << Prescription.new(:days_supply => 30, :dispense_date => 15.days.ago)
+      end
+      it { should == Rational(3, 4) }
+    end
+
+    context "received 15 days ago" do
+      before do
+        @medication.prescriptions << Prescription.new(:days_supply => 30, :dispense_date => 15.days.ago)
+      end
+      it { should be_nan }
+    end
+
+    context "received never" do
+      it { should be_nan }
+    end
+
+    context "received 120, 90 and 60 days ago" do
+      it { should be_nan }
+    end
+  end
 
   describe "#possession" do
     before do

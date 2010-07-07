@@ -23,3 +23,20 @@ How does your re-write compare with the original code? How long did it take you?
 
 What have you learnt from this exercise about simple, well-tested code?
 
+med_possession_ratio(name, days)
+  Returns the medication possession ratio for the drug provided,
+  given the supplied number of days to search back from the last
+  medical claim. It is used with an operator to find the patient population that matches.
+
+  For example, a patient with a 30 day prescription for Lipitor
+  has claims indicating they filled the prescription 15, 60, and 105
+  days ago would have a medication possession ratio of 0.67
+  med_possession_ratio("Lipitor", 30) < 0.67
+
+
+possession(names, days_back)
+    Returns a number of days that a patient has been taking a medication, given the supplied time frame
+    names - one or more names that can be either a drug name, a drug category or a drug ingredient
+    days_back - determines how far back to go in checking prescription dispense dates using days.ago syntax.
+    possession("oxycodone", 365.days.ago) > 84
+    possession("oxycodone", hydrocodone", 90.days.ago) < 36

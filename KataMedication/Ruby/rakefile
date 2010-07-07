@@ -1,4 +1,5 @@
 require 'rake'
+require 'active_support'
 require 'spec/rake/spectask'
 
 desc "Run all examples"
