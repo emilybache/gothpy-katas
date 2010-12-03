@@ -1,0 +1,22 @@
+<html>
+<head>
+</head>
+<body>
+<h1>Find User</h1>
+<form method="get" action="">
+  <table>
+    {{ form }}
+  </table>
+  <input type="submit" />
+</form>
+<div id="results">
+  {%  if results %}
+      <p>{{ results.count }} result(s) found</p>
+
+    {% for result in results  %}
+         {{ result.name }}
+    {% endfor %}
+  {% endif %}
+</div>
+</body>
+</html>
